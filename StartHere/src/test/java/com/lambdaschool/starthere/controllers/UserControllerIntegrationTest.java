@@ -1,8 +1,5 @@
 package com.lambdaschool.starthere.controllers;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.lambdaschool.starthere.models.Role;
-import com.lambdaschool.starthere.models.User;
 import com.lambdaschool.starthere.models.UserRoles;
 import io.restassured.module.mockmvc.RestAssuredMockMvc;
 import org.junit.Before;
@@ -11,7 +8,6 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.test.context.support.WithMockUser;
-import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
@@ -37,17 +33,19 @@ public class UserControllerIntegrationTest
     {
         RestAssuredMockMvc.webAppContextSetup(webApplicationContext);
 
-        mvc = MockMvcBuilders
-                .webAppContextSetup(webApplicationContext)
-                .apply(SecurityMockMvcConfigurers.springSecurity())
-                .build();
+        mvc = MockMvcBuilders.webAppContextSetup(webApplicationContext)
+                             .apply(SecurityMockMvcConfigurers.springSecurity())
+                             .build();
     }
 
 
     @Test
     public void whenMeasuredResponseTime()
     {
-        given().when().get("/roles/roles").then().time(lessThan(5000L));
+        given().when()
+               .get("/roles/roles")
+               .then()
+               .time(lessThan(5000L));
     }
 
     @Test
@@ -84,11 +82,12 @@ public class UserControllerIntegrationTest
 
         String stringU1 = "{\"userid\":0,\"username\":\"snoopy\",\"password\":\"password\",\"userRoles\":[],\"quotes\":[],\"authority\":[]}";
 
-        given().contentType("application/json").body(stringU1)
-                .when()
-                .post("/users/user")
-                .then()
-                .statusCode(201);
+        given().contentType("application/json")
+               .body(stringU1)
+               .when()
+               .post("/users/user")
+               .then()
+               .statusCode(201);
     }
 
     @Test

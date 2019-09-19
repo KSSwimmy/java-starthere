@@ -42,20 +42,24 @@ public class UserServiceImpl implements UserDetailsService, UserService
 
     public User findUserById(long id) throws ResourceNotFoundException
     {
-        return userrepos.findById(id).orElseThrow(() -> new ResourceNotFoundException(Long.toString(id)));
+        return userrepos.findById(id)
+                        .orElseThrow(() -> new ResourceNotFoundException(Long.toString(id)));
     }
 
     public List<User> findAll()
     {
         List<User> list = new ArrayList<>();
-        userrepos.findAll().iterator().forEachRemaining(list::add);
+        userrepos.findAll()
+                 .iterator()
+                 .forEachRemaining(list::add);
         return list;
     }
 
     @Override
     public void delete(long id)
     {
-        if (userrepos.findById(id).isPresent())
+        if (userrepos.findById(id)
+                     .isPresent())
         {
             userrepos.deleteById(id);
         } else
@@ -81,7 +85,8 @@ public class UserServiceImpl implements UserDetailsService, UserService
 
         for (Quote q : user.getQuotes())
         {
-            newUser.getQuotes().add(new Quote(q.getQuote(), newUser));
+            newUser.getQuotes()
+                   .add(new Quote(q.getQuote(), newUser));
         }
 
         return userrepos.save(newUser);
@@ -92,7 +97,8 @@ public class UserServiceImpl implements UserDetailsService, UserService
     @Override
     public User update(User user, long id)
     {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Authentication authentication = SecurityContextHolder.getContext()
+                                                             .getAuthentication();
         User currentUser = userrepos.findByUsername(authentication.getName());
 
         if (currentUser != null)
@@ -109,7 +115,8 @@ public class UserServiceImpl implements UserDetailsService, UserService
                     currentUser.setPasswordNoEncrypt(user.getPassword());
                 }
 
-                if (user.getUserRoles().size() > 0)
+                if (user.getUserRoles()
+                        .size() > 0)
                 {
                     // with so many relationships happening, I decided to go
                     // with old school queries
@@ -119,15 +126,18 @@ public class UserServiceImpl implements UserDetailsService, UserService
                     // add the new ones
                     for (UserRoles ur : user.getUserRoles())
                     {
-                        rolerepos.insertUserRoles(id, ur.getRole().getRoleid());
+                        rolerepos.insertUserRoles(id, ur.getRole()
+                                                        .getRoleid());
                     }
                 }
 
-                if (user.getQuotes().size() > 0)
+                if (user.getQuotes()
+                        .size() > 0)
                 {
                     for (Quote q : user.getQuotes())
                     {
-                        currentUser.getQuotes().add(new Quote(q.getQuote(), currentUser));
+                        currentUser.getQuotes()
+                                   .add(new Quote(q.getQuote(), currentUser));
                     }
                 }
 

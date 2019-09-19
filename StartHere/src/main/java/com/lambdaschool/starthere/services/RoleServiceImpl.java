@@ -20,7 +20,9 @@ public class RoleServiceImpl implements RoleService
     public List<Role> findAll()
     {
         List<Role> list = new ArrayList<>();
-        rolerepos.findAll().iterator().forEachRemaining(list::add);
+        rolerepos.findAll()
+                 .iterator()
+                 .forEachRemaining(list::add);
         return list;
     }
 
@@ -28,7 +30,8 @@ public class RoleServiceImpl implements RoleService
     @Override
     public Role findRoleById(long id)
     {
-        return rolerepos.findById(id).orElseThrow(() -> new ResourceNotFoundException(Long.toString(id)));
+        return rolerepos.findById(id)
+                        .orElseThrow(() -> new ResourceNotFoundException(Long.toString(id)));
     }
 
     @Override
@@ -48,7 +51,8 @@ public class RoleServiceImpl implements RoleService
     @Override
     public void delete(long id)
     {
-        rolerepos.findById(id).orElseThrow(() -> new ResourceNotFoundException(Long.toString(id)));
+        rolerepos.findById(id)
+                 .orElseThrow(() -> new ResourceNotFoundException(Long.toString(id)));
         rolerepos.deleteById(id);
     }
 

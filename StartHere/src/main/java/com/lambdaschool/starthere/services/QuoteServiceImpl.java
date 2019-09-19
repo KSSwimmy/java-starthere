@@ -22,23 +22,32 @@ public class QuoteServiceImpl implements QuoteService
     public List<Quote> findAll()
     {
         List<Quote> list = new ArrayList<>();
-        quoterepos.findAll().iterator().forEachRemaining(list::add);
+        quoterepos.findAll()
+                  .iterator()
+                  .forEachRemaining(list::add);
         return list;
     }
 
     @Override
     public Quote findQuoteById(long id)
     {
-        return quoterepos.findById(id).orElseThrow(() -> new ResourceNotFoundException(Long.toString(id)));
+        return quoterepos.findById(id)
+                         .orElseThrow(() -> new ResourceNotFoundException(Long.toString(id)));
     }
 
     @Override
     public void delete(long id)
     {
-        if (quoterepos.findById(id).isPresent())
+        if (quoterepos.findById(id)
+                      .isPresent())
         {
-            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-            if (quoterepos.findById(id).get().getUser().getUsername().equalsIgnoreCase(authentication.getName()))
+            Authentication authentication = SecurityContextHolder.getContext()
+                                                                 .getAuthentication();
+            if (quoterepos.findById(id)
+                          .get()
+                          .getUser()
+                          .getUsername()
+                          .equalsIgnoreCase(authentication.getName()))
             {
                 quoterepos.deleteById(id);
             } else
@@ -62,9 +71,13 @@ public class QuoteServiceImpl implements QuoteService
     public List<Quote> findByUserName(String username)
     {
         List<Quote> list = new ArrayList<>();
-        quoterepos.findAll().iterator().forEachRemaining(list::add);
+        quoterepos.findAll()
+                  .iterator()
+                  .forEachRemaining(list::add);
 
-        list.removeIf(q -> !q.getUser().getUsername().equalsIgnoreCase(username));
+        list.removeIf(q -> !q.getUser()
+                             .getUsername()
+                             .equalsIgnoreCase(username));
         return list;
     }
 }

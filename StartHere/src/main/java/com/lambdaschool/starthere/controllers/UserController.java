@@ -33,7 +33,8 @@ public class UserController
                 produces = {"application/json"})
     public ResponseEntity<?> listAllUsers(HttpServletRequest request)
     {
-        logger.trace(request.getMethod().toUpperCase() + " " + request.getRequestURI() + " accessed");
+        logger.trace(request.getMethod()
+                            .toUpperCase() + " " + request.getRequestURI() + " accessed");
 
         List<User> myUsers = userService.findAll();
         return new ResponseEntity<>(myUsers, HttpStatus.OK);
@@ -47,7 +48,8 @@ public class UserController
                                      @PathVariable
                                              Long userId)
     {
-        logger.trace(request.getMethod().toUpperCase() + " " + request.getRequestURI() + " accessed");
+        logger.trace(request.getMethod()
+                            .toUpperCase() + " " + request.getRequestURI() + " accessed");
 
         User u = userService.findUserById(userId);
         return new ResponseEntity<>(u, HttpStatus.OK);
@@ -59,7 +61,8 @@ public class UserController
     @ResponseBody
     public ResponseEntity<?> getCurrentUserName(HttpServletRequest request, Authentication authentication)
     {
-        logger.trace(request.getMethod().toUpperCase() + " " + request.getRequestURI() + " accessed");
+        logger.trace(request.getMethod()
+                            .toUpperCase() + " " + request.getRequestURI() + " accessed");
 
         return new ResponseEntity<>(authentication.getPrincipal(), HttpStatus.OK);
     }
@@ -73,13 +76,17 @@ public class UserController
     @RequestBody
             User newuser) throws URISyntaxException
     {
-        logger.trace(request.getMethod().toUpperCase() + " " + request.getRequestURI() + " accessed");
+        logger.trace(request.getMethod()
+                            .toUpperCase() + " " + request.getRequestURI() + " accessed");
 
         newuser = userService.save(newuser);
 
         // set the location header for the newly created resource
         HttpHeaders responseHeaders = new HttpHeaders();
-        URI newUserURI = ServletUriComponentsBuilder.fromCurrentRequest().path("/{userid}").buildAndExpand(newuser.getUserid()).toUri();
+        URI newUserURI = ServletUriComponentsBuilder.fromCurrentRequest()
+                                                    .path("/{userid}")
+                                                    .buildAndExpand(newuser.getUserid())
+                                                    .toUri();
         responseHeaders.setLocation(newUserURI);
 
         return new ResponseEntity<>(null, responseHeaders, HttpStatus.CREATED);
@@ -93,7 +100,8 @@ public class UserController
                                         @PathVariable
                                                 long id)
     {
-        logger.trace(request.getMethod().toUpperCase() + " " + request.getRequestURI() + " accessed");
+        logger.trace(request.getMethod()
+                            .toUpperCase() + " " + request.getRequestURI() + " accessed");
 
         userService.update(updateUser, id);
         return new ResponseEntity<>(HttpStatus.OK);
@@ -106,7 +114,8 @@ public class UserController
                                             @PathVariable
                                                     long id)
     {
-        logger.trace(request.getMethod().toUpperCase() + " " + request.getRequestURI() + " accessed");
+        logger.trace(request.getMethod()
+                            .toUpperCase() + " " + request.getRequestURI() + " accessed");
 
         userService.delete(id);
         return new ResponseEntity<>(HttpStatus.OK);

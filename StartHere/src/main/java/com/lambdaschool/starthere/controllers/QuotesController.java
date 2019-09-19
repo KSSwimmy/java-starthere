@@ -30,7 +30,8 @@ public class QuotesController
                 produces = {"application/json"})
     public ResponseEntity<?> listAllQuotes(HttpServletRequest request)
     {
-        logger.trace(request.getMethod().toUpperCase() + " " + request.getRequestURI() + " accessed");
+        logger.trace(request.getMethod()
+                            .toUpperCase() + " " + request.getRequestURI() + " accessed");
 
         List<Quote> allQuotes = quoteService.findAll();
         return new ResponseEntity<>(allQuotes, HttpStatus.OK);
@@ -43,7 +44,8 @@ public class QuotesController
                                       @PathVariable
                                               Long quoteId)
     {
-        logger.trace(request.getMethod().toUpperCase() + " " + request.getRequestURI() + " accessed");
+        logger.trace(request.getMethod()
+                            .toUpperCase() + " " + request.getRequestURI() + " accessed");
 
         Quote q = quoteService.findQuoteById(quoteId);
         return new ResponseEntity<>(q, HttpStatus.OK);
@@ -56,7 +58,8 @@ public class QuotesController
                                                  @PathVariable
                                                          String userName)
     {
-        logger.trace(request.getMethod().toUpperCase() + " " + request.getRequestURI() + " accessed");
+        logger.trace(request.getMethod()
+                            .toUpperCase() + " " + request.getRequestURI() + " accessed");
 
         List<Quote> theQuotes = quoteService.findByUserName(userName);
         return new ResponseEntity<>(theQuotes, HttpStatus.OK);
@@ -68,13 +71,17 @@ public class QuotesController
     @RequestBody
             Quote newQuote) throws URISyntaxException
     {
-        logger.trace(request.getMethod().toUpperCase() + " " + request.getRequestURI() + " accessed");
+        logger.trace(request.getMethod()
+                            .toUpperCase() + " " + request.getRequestURI() + " accessed");
 
         newQuote = quoteService.save(newQuote);
 
         // set the location header for the newly created resource
         HttpHeaders responseHeaders = new HttpHeaders();
-        URI newQuoteURI = ServletUriComponentsBuilder.fromCurrentRequest().path("/{quoteid}").buildAndExpand(newQuote.getQuotesid()).toUri();
+        URI newQuoteURI = ServletUriComponentsBuilder.fromCurrentRequest()
+                                                     .path("/{quoteid}")
+                                                     .buildAndExpand(newQuote.getQuotesid())
+                                                     .toUri();
         responseHeaders.setLocation(newQuoteURI);
 
         return new ResponseEntity<>(null, responseHeaders, HttpStatus.CREATED);
@@ -86,7 +93,8 @@ public class QuotesController
                                              @PathVariable
                                                      long id)
     {
-        logger.trace(request.getMethod().toUpperCase() + " " + request.getRequestURI() + " accessed");
+        logger.trace(request.getMethod()
+                            .toUpperCase() + " " + request.getRequestURI() + " accessed");
 
         quoteService.delete(id);
         return new ResponseEntity<>(HttpStatus.OK);

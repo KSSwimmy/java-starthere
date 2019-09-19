@@ -42,7 +42,12 @@ public class DataSourceConfig
         }
 
         System.out.println(myUrlString);
-        return DataSourceBuilder.create().username(myDBUser).password(myDBPassword).url(myUrlString).driverClassName(myDriverClass).build();
+        return DataSourceBuilder.create()
+                                .username(myDBUser)
+                                .password(myDBPassword)
+                                .url(myUrlString)
+                                .driverClassName(myDriverClass)
+                                .build();
     }
 
     @Bean(name = "jdbcCustom")

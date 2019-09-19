@@ -39,7 +39,8 @@ public class OpenController
     @RequestBody
             User newuser) throws URISyntaxException
     {
-        logger.trace(request.getMethod().toUpperCase() + " " + request.getRequestURI() + " accessed");
+        logger.trace(request.getMethod()
+                            .toUpperCase() + " " + request.getRequestURI() + " accessed");
 
         ArrayList<UserRoles> newRoles = new ArrayList<>();
         newRoles.add(new UserRoles(newuser, roleService.findByName("user")));
@@ -49,7 +50,9 @@ public class OpenController
 
         // set the location header for the newly created resource - to another controller!
         HttpHeaders responseHeaders = new HttpHeaders();
-        URI newRestaurantURI = ServletUriComponentsBuilder.fromUriString(request.getServerName() + ":" + request.getLocalPort() + "/users/user/{userId}").buildAndExpand(newuser.getUserid()).toUri();
+        URI newRestaurantURI = ServletUriComponentsBuilder.fromUriString(request.getServerName() + ":" + request.getLocalPort() + "/users/user/{userId}")
+                                                          .buildAndExpand(newuser.getUserid())
+                                                          .toUri();
         responseHeaders.setLocation(newRestaurantURI);
 
 
